@@ -63,7 +63,7 @@ public class DetailActivity extends Activity implements View.OnClickListener {
         mRevealView.setVisibility(View.INVISIBLE);
         isEditTextVisible = false;
 
-        setUpAdapter();
+        //setUpAdapter();
         loadPlace();
         windowTransition();
         getPhoto();
