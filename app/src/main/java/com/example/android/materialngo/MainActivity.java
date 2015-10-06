@@ -1,11 +1,14 @@
 package com.example.android.materialngo;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -13,7 +16,6 @@ public class MainActivity extends Activity {
     private boolean isListView;
     private RecyclerView mRecyclerView; //to hold reference to the RecyclerView
     private StaggeredGridLayoutManager mStaggeredLayoutManager; //to hold reference to the LayoutManager
-
     private NgoListAdapter mAdapter;
 
     @Override
@@ -27,8 +29,20 @@ public class MainActivity extends Activity {
 
         mAdapter = new NgoListAdapter(this);
         mRecyclerView.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(onItemClickListener);
 
     }
+
+    NgoListAdapter.OnItemClickListener onItemClickListener = new NgoListAdapter.OnItemClickListener() {
+
+        @Override
+        public void onItemClick(View v, int position) {
+            Toast.makeText(MainActivity.this, "Clicked On " + position, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(MainActivity.this, DetailActivity.class);
+            intent.putExtra(DetailActivity.EXTRA_PARAM_ID, position);
+            startActivity(intent);
+        }
+    };
 
     private void setUpActionBar() {
 
@@ -61,10 +75,12 @@ public class MainActivity extends Activity {
     private void toggle() {
         MenuItem item = menu.findItem(R.id.action_toggle);
         if (isListView) {
+            mStaggeredLayoutManager.setSpanCount(1);
             item.setIcon(R.drawable.ic_action_list);
             item.setTitle("Show as list");
             isListView = false;
         } else {
+            mStaggeredLayoutManager.setSpanCount(2);
             item.setIcon(R.drawable.ic_action_grid);
             item.setTitle("Show as grid");
             isListView = true;

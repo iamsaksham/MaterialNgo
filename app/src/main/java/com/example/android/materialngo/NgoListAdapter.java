@@ -1,6 +1,9 @@
 package com.example.android.materialngo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.squareup.picasso.Picasso;
 public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.ViewHolder> {
 
     Context mContext;
+    OnItemClickListener mItemClickListener;
 
     public NgoListAdapter(Context context) {
         this.mContext = context;
@@ -40,19 +44,46 @@ public class NgoListAdapter extends RecyclerView.Adapter<NgoListAdapter.ViewHold
         Picasso.with(mContext)
                 .load(place.getImageResourceId(mContext))
                 .into(holder.placeImage);
+
+        Bitmap photo = BitmapFactory.decodeResource(mContext.getResources(), place.getImageResourceId(mContext));
+        Palette.generateAsync(photo, new Palette.PaletteAsyncListener() {
+           public void onGenerated (Palette palette) {
+               int bgColor = palette.getVibrantColor(mContext.getResources().getColor(android.R.color.black));
+               holder.placeNameHolder.setBackgroundColor(bgColor);
+           }
+        });
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public LinearLayout placeHolder;
         public LinearLayout placeNameHolder;
         public TextView placeName;
         public ImageView placeImage;
+
         public ViewHolder(View itemView) {
             super(itemView);
             placeHolder = (LinearLayout) itemView.findViewById(R.id.mainHolder);
             placeName = (TextView) itemView.findViewById(R.id.placeName);
             placeNameHolder = (LinearLayout) itemView.findViewById(R.id.placeNameHolder);
             placeImage = (ImageView) itemView.findViewById(R.id.placeImage);
+
+            placeHolder.setOnClickListener(this);
         }
+
+        @Override
+        public void onClick (View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(itemView, getPosition());
+            }
+        }
+
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position);
+    }
+
+    public void setOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 }
