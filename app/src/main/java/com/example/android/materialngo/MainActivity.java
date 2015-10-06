@@ -8,7 +8,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -37,7 +36,7 @@ public class MainActivity extends Activity {
 
         @Override
         public void onItemClick(View v, int position) {
-            Toast.makeText(MainActivity.this, "Clicked On " + position, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(MainActivity.this, "Clicked On " + position, Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(MainActivity.this, DetailActivity.class);
             intent.putExtra(DetailActivity.EXTRA_PARAM_ID, position);
             startActivity(intent);
