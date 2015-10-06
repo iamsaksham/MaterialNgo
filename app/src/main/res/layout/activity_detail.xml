@@ -52,7 +52,8 @@
                 android:layout_gravity="center_vertical"
                 android:paddingLeft="10dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white" />
+                android:textColor="@android:color/white"
+                />
 
         </LinearLayout>
 
@@ -75,14 +76,10 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="-10dp"
-        android:text="MY ACTIVITIES"
+        android:text="ADDRESS"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@android:color/white" />
 
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:requiresFadingEdge="vertical" />
+
 
 </LinearLayout>
